@@ -1,9 +1,9 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> JoonHee's Workspace </title> 
+    <title>JoonHee 24-10-13</title>
     <style>
         @font-face {
             font-family: 'HakgyoansimGeurimilgiTTF-R';
@@ -56,22 +56,24 @@
         .todo-input {
             margin-top: 10px;
         }
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
-    <h3>JoonHee 24-10-13</h3> 
+    <h3>JoonHee 24-10-13</h3>
 
     <!-- Navigation buttons -->
-    <button onclick="showContent('todo')">To Do List</button> <!-- Moved To Do List button to first position -->
+    <button onclick="showContent('todo')">To Do List</button>
     <button onclick="showContent('lab')">Lab Progress</button>
     <button onclick="showContent('lab-seminar')">Lab Paper Seminar</button>
     <button onclick="showContent('masters')">Master's Program</button>
 
     <!-- To Do content -->
-    <div id="todo" class="content active">
-        <h4>To Do List</h4>
-
+    <div id="todo" class="content">
         <div class="clock" id="clock">YYYY . MM . DD (Day) HH : MM . am/pm</div>
+        <h4>To Do List</h4>
 
         <ul class="todo-list" id="todo-list">
             <!-- Checklist items will be added here -->
@@ -79,11 +81,87 @@
 
         <input type="text" id="todo-input" class="todo-input" placeholder="Enter a new task">
         <button onclick="addTodo()">Add Task</button>
-        <button onclick="clearAllTodos()">Clear All</button>
+        <button onclick="enterSortMode()">Sort</button>
+        <button onclick="enterDeleteMode()">Delete</button>
+
+        <!-- Delete mode buttons -->
+        <div id="delete-mode-buttons" class="hidden">
+            <button onclick="exitDeleteMode()">Exit Delete Mode</button>
+            <button onclick="clearAllTodos()">Clear All</button>
+        </div>
+    </div>
+
+    <!-- Lab Progress content -->
+    <div id="lab" class="content">
+        <h4>Lab Progress</h4>
+        <h5>Linux Kernel</h5>
+        <ul>
+            <li>Linux 커널 코드 저장소<br><a href="https://github.com/torvalds/linux/tree/master" target="_blank">https://github.com/torvalds/linux/tree/master</a></li>
+            <li>Linux 장치 드라이버 관련 가이드<br><a href="https://www.oreilly.com/library/view/linux-device-drivers/9781785280009/26250ed8-a263-4910-8d43-5c6e1a6d753f.xhtml" target="_blank">https://www.oreilly.com/library/view/linux-device-drivers/9781785280009/26250ed8-a263-4910-8d43-5c6e1a6d753f.xhtml</a></li>
+        </ul>
+
+        <h5>SPDK Component Detail</h5>
+        <h6>파일 시스템 및 블록 장치 관련</h6>
+        <ul>
+            <li>SPDK Blob Store 설명<br><a href="https://spdk.io/doc/blob.html" target="_blank">https://spdk.io/doc/blob.html</a></li>
+            <li>파일 시스템 및 디바이스 관련 설명<br><a href="https://pages.cs.wisc.edu/~remzi/OSTEP/file-devices.pdf" target="_blank">https://pages.cs.wisc.edu/~remzi/OSTEP/file-devices.pdf</a></li>
+        </ul>
+    </div>
+
+    <!-- Lab Paper Seminar content -->
+    <div id="lab-seminar" class="content">
+        <h4>Lab Paper Seminar</h4>
+        <h5>[EuroSys'24] Exploring the Asynchrony of Slow Memory Filesystem with EasyIO</h5>
+        <ul>
+            <li><a href="#dma-ioat">1. DMA 및 IOAT 관련</a></li>
+            <li><a href="#soc-architecture">2. 특정 SoC 및 아키텍처 설명</a></li>
+            <li><a href="#misc">3. 기타 자료</a></li>
+        </ul>
+
+        <h6 id="dma-ioat">1. DMA (Direct Memory Access) 및 IOAT 관련</h6>
+        <ul>
+            <li>Linux 커널의 DMA에 대한 설명<br><a href="https://yohda.tistory.com/entry/%EB%A6%AC%EB%88%85%EC%8A%A4-%EC%BB%A4%EB%84%90-DMA-overview" target="_blank">https://yohda.tistory.com/entry/%EB%A6%AC%EB%88%85%EC%8A%A4-%EC%BB%A4%EB%84%90-DMA-overview</a></li>
+            <li>AMD Zynq Ultrascale의 DMA 아키텍처 설명<br><a href="https://docs.amd.com/r/en-US/ug1085-zynq-ultrascale-trm/DMA-Architecture" target="_blank">https://docs.amd.com/r/en-US/ug1085-zynq-ultrascale-trm/DMA-Architecture</a></li>
+            <li>Linux DMA 엔진 API 문서<br><a href="https://docs.kernel.org/driver-api/dmaengine/provider.html" target="_blank">https://docs.kernel.org/driver-api/dmaengine/provider.html</a></li>
+            <li>Intel IOAT (Intel I/O Acceleration Technology) 소개<br><a href="https://liujunming.top/2022/03/29/Introduction-to-Intel-I-OAT/" target="_blank">https://liujunming.top/2022/03/29/Introduction-to-Intel-I-OAT/</a></li>
+            <li>Intel IOAT를 사용하는 방법에 대한 설명<br><a href="https://insujang.github.io/2021-04-26/using-intel-ioat-dma/" target="_blank">https://insujang.github.io/2021-04-26/using-intel-ioat-dma/</a></li>
+            <li>DPDK에서 Intel IOAT DMA 사용 관련 가이드<br><a href="https://doc.dpdk.org/guides/dmadevs/ioat.html" target="_blank">https://doc.dpdk.org/guides/dmadevs/ioat.html</a></li>
+            <li>Intel IOAT 개요 PDF<br><a href="https://github.com/tpn/pdfs/blob/master/Intel%20IO%20Acceleration%20Technology%20(IOAT)%20Overview.pdf" target="_blank">https://github.com/tpn/pdfs/blob/master/Intel%20IO%20Acceleration%20Technology%20(IOAT)%20Overview.pdf</a></li>
+            <li>DPDK에서 IOAT 관련 리소스<br><a href="https://doc.dpdk.org/guides-19.08/rawdevs/ioat.html" target="_blank">https://doc.dpdk.org/guides-19.08/rawdevs/ioat.html</a></li>
+            <li>Intel Data Streaming Accelerator (DSA)에 관한 문서<br><a href="https://www.intel.com/content/www/us/en/products/docs/accelerator-engines/data-streaming-accelerator.html" target="_blank">https://www.intel.com/content/www/us/en/products/docs/accelerator-engines/data-streaming-accelerator.html</a></li>
+        </ul>
+
+        <h6 id="soc-architecture">2. 특정 SoC 및 아키텍처 설명</h6>
+        <ul>
+            <li>AMD Zynq-7000 SoC에서 인터럽트 서비스 루틴에 대한 설명<br><a href="https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/Example-IRQ-Interrupt-Service-Routine" target="_blank">https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/Example-IRQ-Interrupt-Service-Routine</a></li>
+            <li>STM32MPU에서 DMA 엔진에 대한 설명<br><a href="https://wiki.st.com/stm32mpu/wiki/Dmaengine_overview#Virtual_DMA_channel_support" target="_blank">https://wiki.st.com/stm32mpu/wiki/Dmaengine_overview#Virtual_DMA_channel_support</a></li>
+        </ul>
+
+        <h6 id="misc">3. 기타 자료</h6>
+        <ul>
+            <li>Intel Data Streaming Accelerator (DSA) 관련 프레젠테이션 PDF<br><a href="https://www.colfax-intl.com/downloads/Public-Accelerators-Deep-Dive-Presentation-Intel-DSA.pdf" target="_blank">https://www.colfax-intl.com/downloads/Public-Accelerators-Deep-Dive-Presentation-Intel-DSA.pdf</a></li>
+            <li>DMA 관련 동영상<br><a href="https://www.youtube.com/watch?v=kl9c6DrDnHo" target="_blank">https://www.youtube.com/watch?v=kl9c6DrDnHo</a></li>
+        </ul>
+    </div>
+
+    <!-- Master's Program content -->
+    <div id="masters" class="content">
+        <h4>Master's Program</h4>
+        <h5>Topics in Artificial Intelligence</h5>
+        <h5>Personal Seminar</h5>
+        <ul>
+            <li><a href="https://www.usenix.org/conference/atc21/presentation/ren-jie" target="_blank">[ATC'21] ZeRO-Offload</a></li>
+            <li><a href="https://www.usenix.org/conference/fast21/presentation/kim" target="_blank">[FAST'21] Behemoth</a></li>
+            <li><a href="https://dl.acm.org/doi/pdf/10.1145/3458817.3476205" target="_blank">[SC'21] ZeRO-Infinity</a></li>
+            <li><a href="https://dl.acm.org/doi/pdf/10.1145/3445814.3446763" target="_blank">[ASPLOS'21] RecSSD</a></li>
+            <li><a href="https://arxiv.org/pdf/2406.14571v1" target="_blank">[ISCA'24] PreSto</a></li>
+            <li><a href="https://www.usenix.org/conference/fast21/presentation/mohan" target="_blank">[FAST'21] CheckFreq</a></li>
+            <li><a href="https://www.usenix.org/conference/atc23/presentation/zhao" target="_blank">[ATC'23] Tectonic-Shift</a></li>
+        </ul>
     </div>
 
     <script>
-        // Function to display content based on the section
+        // Show selected section
         function showContent(section) {
             document.querySelectorAll('.content').forEach(content => content.classList.remove('active'));
             document.getElementById(section).classList.add('active');
@@ -107,6 +185,10 @@
 
         setInterval(updateClock, 1000);
         updateClock();
+
+        // ToDo list functionalities
+        let isSortMode = false;
+        let isDeleteMode = false;
 
         // LocalStorage to persist todos
         function saveTodos(todos) {
@@ -140,13 +222,33 @@
             todos.forEach((todo, index) => {
                 const li = document.createElement('li');
                 li.innerHTML = `<input type="checkbox" ${todo.completed ? 'checked' : ''} onclick="toggleComplete(${index})"> 
-                                ${todo.text} 
-                                <button onclick="deleteTodo(${index})">Delete</button>`;
+                                ${todo.text}`;
+                li.draggable = isSortMode;
+                li.addEventListener('dragstart', function(event) {
+                    event.dataTransfer.setData('text/plain', index);
+                });
+                li.addEventListener('dragover', function(event) {
+                    event.preventDefault();
+                });
+                li.addEventListener('drop', function(event) {
+                    const fromIndex = event.dataTransfer.getData('text');
+                    const toIndex = index;
+                    moveTodoItem(fromIndex, toIndex);
+                });
                 if (todo.completed) {
                     li.classList.add('completed');
                 }
                 todoList.appendChild(li);
             });
+        }
+
+        // Move todo item in the list
+        function moveTodoItem(fromIndex, toIndex) {
+            const todos = loadTodos();
+            const movedItem = todos.splice(fromIndex, 1)[0];
+            todos.splice(toIndex, 0, movedItem);
+            saveTodos(todos);
+            renderTodos();
         }
 
         // Toggle the completion status of a task
@@ -157,45 +259,55 @@
             renderTodos();
         }
 
-        // Delete a single task
-        function deleteTodo(index) {
-            const todos = loadTodos();
-            todos.splice(index, 1);
-            saveTodos(todos);
-            renderTodos();
-        }
-
         // Clear all tasks
         function clearAllTodos() {
             localStorage.removeItem('todos');
             renderTodos();
         }
 
+        // Enter sort mode
+        function enterSortMode() {
+            isSortMode = true;
+            renderTodos();
+        }
+
+        // Enter delete mode
+        function enterDeleteMode() {
+            isDeleteMode = true;
+            document.getElementById('delete-mode-buttons').classList.remove('hidden');
+            renderDeleteMode();
+        }
+
+        // Exit delete mode
+        function exitDeleteMode() {
+            isDeleteMode = false;
+            document.getElementById('delete-mode-buttons').classList.add('hidden');
+            renderTodos();
+        }
+
+        // Render delete mode (show delete buttons)
+        function renderDeleteMode() {
+            const todoList = document.getElementById('todo-list');
+            todoList.innerHTML = '';
+
+            const todos = loadTodos();
+            todos.forEach((todo, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `${todo.text} <button onclick="deleteTodo(${index})">Delete</button>`;
+                todoList.appendChild(li);
+            });
+        }
+
+        // Delete a single task
+        function deleteTodo(index) {
+            const todos = loadTodos();
+            todos.splice(index, 1);
+            saveTodos(todos);
+            renderDeleteMode();
+        }
+
         // Load and render todos when the page is loaded
         window.onload = renderTodos;
-
-        // Drag and drop functionality (optional improvement)
-        let dragged;
-        document.addEventListener("dragstart", function(event) {
-            dragged = event.target;
-        });
-
-        document.addEventListener("dragover", function(event) {
-            event.preventDefault();
-        });
-
-        document.addEventListener("drop", function(event) {
-            event.preventDefault();
-            if (event.target.nodeName === "LI") {
-                const todos = loadTodos();
-                const fromIndex = Array.from(event.target.parentNode.children).indexOf(dragged);
-                const toIndex = Array.from(event.target.parentNode.children).indexOf(event.target);
-                const movedTodo = todos.splice(fromIndex, 1)[0];
-                todos.splice(toIndex, 0, movedTodo);
-                saveTodos(todos);
-                renderTodos();
-            }
-        });
     </script>
 </body>
 </html>
