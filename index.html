@@ -18,7 +18,6 @@
 
         h3 {
             margin-bottom: 10px;
-            margin-top: 20px; /* 위 여백 추가 */
         }
 
         .navigation {
@@ -53,7 +52,7 @@
             font-size: 24px;
             font-weight: bold;
             text-align: center;
-            line-height: 1.5;
+            line-height: 1.5; /* 줄 간격 1.5로 설정 */
             margin-bottom: 20px;
             white-space: pre-line;
         }
@@ -61,12 +60,12 @@
         .todo-list {
             list-style: none;
             padding: 0;
-            max-width: 500px;
-            margin: 0 auto;
+            max-width: 500px; /* 투두 리스트의 가로 길이 제한 */
+            margin: 0;
         }
 
         .todo-list li {
-            margin: 15px 0;
+            margin: 10px 0;
             cursor: move;
             background-color: #f1f1f1;
             padding: 10px;
@@ -97,46 +96,26 @@
         .left-column {
             width: 30%;
             padding: 10px;
-            padding-left: 15px; /* 좌측 여백 추가 */
         }
 
         .right-column {
             width: 70%;
             padding: 10px;
-            height: 100vh;
+            height: 100vh; /* 높이를 맞추기 위해 추가 */
             overflow-y: auto;
         }
-
+        
         /* 시계 가운데 정렬 */
         .clock {
             text-align: center;
         }
-
-        /* 링크 색상이 클릭 후에도 변하지 않도록 */
-        a:link, a:visited {
-            color: blue;
-            text-decoration: none;
-        }
-
-        a:hover {
-            text-decoration: underline;
-        }
-
-        a:active {
-            color: blue;
-        }
-
-        /* Add line breaks between buttons */
-        #todo-buttons-container button {
-            display: block;
-            margin-bottom: 10px;
-        }
-
     </style>
 </head>
 <body>
+    <!-- 최상단 워크스테이션 제목 -->
     <h3>Joonhee's Workstation</h3>
 
+    <!-- 페이지 이동 버튼 -->
     <div class="navigation">
         <button onclick="showContent('todo')">To Do List</button>
         <button onclick="showContent('lab')">Lab Progress</button>
@@ -145,43 +124,53 @@
     </div>
 
     <div class="layout">
+        <!-- 좌측 시계 및 투두 리스트 -->
         <div class="left-column">
+            <!-- 시계 -->
             <div class="clock" id="clock">YYYY . MM . DD (Day)\nHH : MM : SS am/pm</div>
             <br><br>
 
+            <!-- 투두 리스트 -->
             <div class="todo-container">
                 <h4>To Do List</h4>
-                <ul class="todo-list" id="todo-list"></ul>
+                <ul class="todo-list" id="todo-list">
+                    <!-- Checklist items will be added here -->
+                </ul>
 
-                <div id="todo-buttons-container">
+                <div class="buttons" id="default-buttons">
                     <input type="text" id="todo-input" class="todo-input" placeholder="Enter a new task">
                     <button onclick="addTodo()">Add Task</button>
                     <button onclick="enterSortMode()">Custom Sort Mode</button>
                     <button onclick="enterDeleteMode()">Delete Mode</button>
                 </div>
 
+                <!-- Delete mode buttons -->
                 <div id="delete-mode-buttons" class="hidden">
                     <button onclick="exitDeleteMode()">Exit Delete Mode</button>
                     <button onclick="clearAllTodos()">Clear All</button>
                 </div>
 
+                <!-- Sort mode buttons -->
                 <div id="sort-mode-buttons" class="hidden">
                     <button onclick="exitSortMode()">Exit Sort Mode</button>
                 </div>
             </div>
         </div>
 
+        <!-- 우측 내용 -->
         <div class="right-column">
+            <!-- 각 페이지 내용 -->
             <div id="lab" class="content">
                 <h4>Lab Progress</h4>
                 <h5>Linux Kernel</h5>
                 <ul>
-                    <li><a href="https://github.com/torvalds/linux/tree/master" target="_blank">Linux 커널 코드 저장소</a></li>
-                    <li><a href="https://www.thomas-krenn.com/en/wiki/Linux_Storage_Stack_Diagram" target="_blank">Linux 커널 스택 다이어그램</a></li>
-                    <li><a href="https://www.oreilly.com/library/view/linux-device-drivers/9781785280009/26250ed8-a263-4910-8d43-5c6e1a6d753f.xhtml" target="_blank">Linux 장치 드라이버 관련 가이드</a></li>
+                    <li>Linux 커널 코드 저장소<br><a href="https://github.com/torvalds/linux/tree/master" target="_blank">https://github.com/torvalds/linux/tree/master</a></li>
+                    <li>Linux 커널 스택 다이어그램<br><a href="https://www.thomas-krenn.com/en/wiki/Linux_Storage_Stack_Diagram" target="_blank">https://www.thomas-krenn.com/en/wiki/Linux_Storage_Stack_Diagram</a></li>
+                    <li>Linux 장치 드라이버 관련 가이드<br><a href="https://www.oreilly.com/library/view/linux-device-drivers/9781785280009/26250ed8-a263-4910-8d43-5c6e1a6d753f.xhtml" target="_blank">https://www.oreilly.com/library/view/linux-device-drivers/9781785280009/26250ed8-a263-4910-8d43-5c6e1a6d753f.xhtml</a></li>
                 </ul>
             </div>
 
+            <!-- Lab Paper Seminar content -->
             <div id="lab-seminar" class="content">
                 <h4>Lab Paper Seminar</h4>
                 <h5>[EuroSys'24] Exploring the Asynchrony of Slow Memory Filesystem with EasyIO</h5>
@@ -192,6 +181,7 @@
                 </ul>
             </div>
 
+            <!-- Master's Program content -->
             <div id="masters" class="content">
                 <h4>Master's Program</h4>
                 <h5>Topics in Artificial Intelligence</h5>
