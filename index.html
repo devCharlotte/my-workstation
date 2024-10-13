@@ -113,9 +113,18 @@
             text-align: center;
         }
 
-        /* 버튼들을 아랫줄에 배치 */
+        /* 버튼을 옆에 두기 위한 설정 */
+        .input-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .input-group input {
+            margin-right: 10px;
+        }
+
         .buttons button {
-            display: block;
             margin-bottom: 5px;
         }
 
@@ -161,8 +170,10 @@
                 </ul>
 
                 <div class="buttons" id="default-buttons">
-                    <input type="text" id="todo-input" class="todo-input" placeholder="Enter a new task">
-                    <button onclick="addTodo()">Add Task</button>
+                    <div class="input-group">
+                        <input type="text" id="todo-input" class="todo-input" placeholder="Enter a new task">
+                        <button onclick="addTodo()">Add Task</button>
+                    </div>
                     <button onclick="enterSortMode()">Custom Sort Mode</button>
                     <button onclick="enterDeleteMode()">Delete Mode</button>
                 </div>
@@ -183,17 +194,6 @@
         <!-- 우측 내용 -->
         <div class="right-column">
             <!-- 각 페이지 내용 -->
-            <div id="lab" class="content">
-                <h4>Lab Progress</h4>
-                <h5>Linux Kernel</h5>
-                <ul>
-                    <li><a href="https://github.com/torvalds/linux/tree/master" target="_blank">Linux 커널 코드 저장소</a></li>
-                    <li><a href="https://www.thomas-krenn.com/en/wiki/Linux_Storage_Stack_Diagram" target="_blank">Linux 커널 스택 다이어그램</a></li>
-                    <li><a href="https://www.oreilly.com/library/view/linux-device-drivers/9781785280009/26250ed8-a263-4910-8d43-5c6e1a6d753f.xhtml" target="_blank">Linux 장치 드라이버 관련 가이드</a></li>
-                </ul>
-            </div>
-
-            <!-- Lab Paper Seminar content -->
             <div id="lab-seminar" class="content">
                 <h4>Lab Paper Seminar</h4>
                 <h5>[EuroSys'24] Exploring the Asynchrony of Slow Memory Filesystem with EasyIO</h5>
@@ -202,9 +202,43 @@
                     <li><a href="#soc-architecture">특정 SoC 및 아키텍처 설명</a></li>
                     <li><a href="#misc">기타 자료</a></li>
                 </ul>
+
+                <h6 id="dma-ioat">DMA (Direct Memory Access) 및 IOAT 관련</h6>
+                <ul>
+                    <li><a href="https://yohda.tistory.com/entry/%EB%A6%AC%EB%88%85%EC%8A%A4-%EC%BB%A4%EB%84%90-DMA-overview" target="_blank">Linux 커널의 DMA에 대한 설명</a></li>
+                    <li><a href="https://docs.amd.com/r/en-US/ug1085-zynq-ultrascale-trm/DMA-Architecture" target="_blank">AMD Zynq Ultrascale의 DMA 아키텍처 설명</a></li>
+                    <li><a href="https://docs.kernel.org/driver-api/dmaengine/provider.html" target="_blank">Linux DMA 엔진 API 문서</a></li>
+                    <li><a href="https://liujunming.top/2022/03/29/Introduction-to-Intel-I-OAT/" target="_blank">Intel IOAT (Intel I/O Acceleration Technology) 소개</a></li>
+                    <li><a href="https://insujang.github.io/2021-04-26/using-intel-ioat-dma/" target="_blank">Intel IOAT를 사용하는 방법에 대한 설명</a></li>
+                    <li><a href="https://doc.dpdk.org/guides/dmadevs/ioat.html" target="_blank">DPDK에서 Intel IOAT DMA 사용 관련 가이드</a></li>
+                    <li><a href="https://github.com/tpn/pdfs/blob/master/Intel%20IO%20Acceleration%20Technology%20(IOAT)%20Overview.pdf" target="_blank">Intel IOAT 개요 PDF</a></li>
+                    <li><a href="https://doc.dpdk.org/guides-19.08/rawdevs/ioat.html" target="_blank">DPDK에서 IOAT 관련 리소스</a></li>
+                    <li><a href="https://www.intel.com/content/www/us/en/products/docs/accelerator-engines/data-streaming-accelerator.html" target="_blank">Intel Data Streaming Accelerator (DSA)에 관한 문서</a></li>
+                    <li><a href="https://web.archive.org/web/20160505034410/http://www.linuxfoundation.org/collaborate/workgroups/networking/i/oat" target="_blank">Linux Foundation의 Intel IOAT 관련 자료</a></li>
+                </ul>
+
+                <h6 id="soc-architecture">특정 SoC 및 아키텍처 설명</h6>
+                <ul>
+                    <li><a href="https://docs.amd.com/r/en-US/ug585-zynq-7000-SoC-TRM/Example-IRQ-Interrupt-Service-Routine" target="_blank">AMD Zynq-7000 SoC에서 인터럽트 서비스 루틴에 대한 설명</a></li>
+                    <li><a href="https://wiki.st.com/stm32mpu/wiki/Dmaengine_overview#Virtual_DMA_channel_support" target="_blank">STM32MPU에서 DMA 엔진에 대한 설명</a></li>
+                </ul>
+
+                <h6 id="misc">기타 자료</h6>
+                <ul>
+                    <li><a href="https://www.colfax-intl.com/downloads/Public-Accelerators-Deep-Dive-Presentation-Intel-DSA.pdf" target="_blank">Intel Data Streaming Accelerator (DSA) 관련 프레젠테이션 PDF</a></li>
+                    <li><a href="https://www.youtube.com/watch?v=kl9c6DrDnHo" target="_blank">DMA 관련 동영상</a></li>
+                </ul>
             </div>
 
-            <!-- Master's Program content -->
+            <div id="lab" class="content">
+                <h4>Lab Progress</h4>
+                <h5>Linux Kernel</h5>
+                <ul>
+                    <li><a href="https://github.com/torvalds/linux/tree/master" target="_blank">Linux 커널 코드 저장소</a></li>
+                    <li><a href="https://www.oreilly.com/library/view/linux-device-drivers/9781785280009/26250ed8-a263-4910-8d43-5c6e1a6d753f.xhtml" target="_blank">Linux 장치 드라이버 관련 가이드</a></li>
+                </ul>
+            </div>
+
             <div id="masters" class="content">
                 <h4>Master's Program</h4>
                 <h5>Topics in Artificial Intelligence</h5>
