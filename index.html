@@ -104,10 +104,30 @@
             height: 100vh; /* 높이를 맞추기 위해 추가 */
             overflow-y: auto;
         }
-        
+
         /* 시계 가운데 정렬 */
         .clock {
             text-align: center;
+        }
+
+        /* 버튼들을 아랫줄에 배치 */
+        .buttons button {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* 링크 색상이 클릭 후에도 변하지 않도록 */
+        a:link, a:visited {
+            color: blue;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        a:active {
+            color: blue;
         }
     </style>
 </head>
@@ -164,9 +184,9 @@
                 <h4>Lab Progress</h4>
                 <h5>Linux Kernel</h5>
                 <ul>
-                    <li>Linux 커널 코드 저장소<br><a href="https://github.com/torvalds/linux/tree/master" target="_blank">https://github.com/torvalds/linux/tree/master</a></li>
-                    <li>Linux 커널 스택 다이어그램<br><a href="https://www.thomas-krenn.com/en/wiki/Linux_Storage_Stack_Diagram" target="_blank">https://www.thomas-krenn.com/en/wiki/Linux_Storage_Stack_Diagram</a></li>
-                    <li>Linux 장치 드라이버 관련 가이드<br><a href="https://www.oreilly.com/library/view/linux-device-drivers/9781785280009/26250ed8-a263-4910-8d43-5c6e1a6d753f.xhtml" target="_blank">https://www.oreilly.com/library/view/linux-device-drivers/9781785280009/26250ed8-a263-4910-8d43-5c6e1a6d753f.xhtml</a></li>
+                    <li><a href="https://github.com/torvalds/linux/tree/master" target="_blank">Linux 커널 코드 저장소</a></li>
+                    <li><a href="https://www.thomas-krenn.com/en/wiki/Linux_Storage_Stack_Diagram" target="_blank">Linux 커널 스택 다이어그램</a></li>
+                    <li><a href="https://www.oreilly.com/library/view/linux-device-drivers/9781785280009/26250ed8-a263-4910-8d43-5c6e1a6d753f.xhtml" target="_blank">Linux 장치 드라이버 관련 가이드</a></li>
                 </ul>
             </div>
 
@@ -175,9 +195,9 @@
                 <h4>Lab Paper Seminar</h4>
                 <h5>[EuroSys'24] Exploring the Asynchrony of Slow Memory Filesystem with EasyIO</h5>
                 <ul>
-                    <li><a href="#dma-ioat">1. DMA 및 IOAT 관련</a></li>
-                    <li><a href="#soc-architecture">2. 특정 SoC 및 아키텍처 설명</a></li>
-                    <li><a href="#misc">3. 기타 자료</a></li>
+                    <li><a href="#dma-ioat">DMA 및 IOAT 관련</a></li>
+                    <li><a href="#soc-architecture">특정 SoC 및 아키텍처 설명</a></li>
+                    <li><a href="#misc">기타 자료</a></li>
                 </ul>
             </div>
 
