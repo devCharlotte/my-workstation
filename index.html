@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JoonHee 24-10-13</title> 
+    <title> JoonHee's Workspace </title> 
     <style>
         @font-face {
             font-family: 'HakgyoansimGeurimilgiTTF-R';
@@ -12,7 +12,6 @@
             font-style: normal;
         }
 
-        /* 모든 텍스트에 폰트 적용 */
         body {
             font-family: 'HakgyoansimGeurimilgiTTF-R', sans-serif;
         }
@@ -24,19 +23,19 @@
             display: block;
         }
         h4 {
-            font-size: 1.2em; /* Subheading size for main sections */
+            font-size: 1.2em;
         }
         h5 {
-            font-size: 1em; /* Subheading size for sub-sections */
+            font-size: 1em;
         }
         h6 {
-            font-size: 0.9em; /* Smaller subheading size for nested items */
+            font-size: 0.9em;
         }
         button {
             margin: 5px;
         }
         .clock {
-            font-size: 24px;
+            font-size: 30px;
             font-weight: bold;
             margin-bottom: 10px;
         }
@@ -46,6 +45,10 @@
         }
         .todo-list li {
             margin: 10px 0;
+            cursor: move;
+            background-color: #f1f1f1;
+            padding: 10px;
+            border-radius: 5px;
         }
         .todo-list li.completed {
             text-decoration: line-through;
@@ -59,57 +62,16 @@
     <h3>JoonHee 24-10-13</h3> 
 
     <!-- Navigation buttons -->
+    <button onclick="showContent('todo')">To Do List</button> <!-- Moved To Do List button to first position -->
     <button onclick="showContent('lab')">Lab Progress</button>
     <button onclick="showContent('lab-seminar')">Lab Paper Seminar</button>
     <button onclick="showContent('masters')">Master's Program</button>
-    <button onclick="showContent('todo')">To Do</button> <!-- Added To Do button -->
-
-    <!-- Lab Progress content -->
-    <div id="lab" class="content">
-        <h4>Lab Progress</h4>
-        <h5>Linux Kernel</h5>
-        <ul>
-            <li>Linux 커널 코드 저장소<br><a href="https://github.com/torvalds/linux/tree/master" target="_blank">https://github.com/torvalds/linux/tree/master</a></li>
-            <li>Linux 장치 드라이버 관련 가이드<br><a href="https://www.oreilly.com/library/view/linux-device-drivers/9781785280009/26250ed8-a263-4910-8d43-5c6e1a6d753f.xhtml" target="_blank">https://www.oreilly.com/library/view/linux-device-drivers/9781785280009/26250ed8-a263-4910-8d43-5c6e1a6d753f.xhtml</a></li>
-        </ul>
-
-        <h5>SPDK Component Detail</h5>
-        <h6>파일 시스템 및 블록 장치 관련</h6>
-        <ul>
-            <li>SPDK Blob Store 설명<br><a href="https://spdk.io/doc/blob.html" target="_blank">https://spdk.io/doc/blob.html</a></li>
-            <li>파일 시스템 및 디바이스 관련 설명<br><a href="https://pages.cs.wisc.edu/~remzi/OSTEP/file-devices.pdf" target="_blank">https://pages.cs.wisc.edu/~remzi/OSTEP/file-devices.pdf</a></li>
-        </ul>
-    </div>
-
-    <!-- Lab Paper Seminar content -->
-    <div id="lab-seminar" class="content">
-        <h4>Lab Paper Seminar</h4>
-        <h5>[EuroSys'24] Exploring the Asynchrony of Slow Memory Filesystem with EasyIO</h5>
-        <ul>
-            <li><a href="#dma-ioat">1. DMA 및 IOAT 관련</a></li>
-            <li><a href="#soc-architecture">2. 특정 SoC 및 아키텍처 설명</a></li>
-            <li><a href="#misc">3. 기타 자료</a></li>
-        </ul>
-    </div>
-
-    <!-- Master's Program content -->
-    <div id="masters" class="content">
-        <h4>Master's Program</h4>
-        <h5>Topics in Artificial Intelligence</h5>
-        <h5>Personal Seminar</h5>
-        <ul>
-            <li><a href="https://www.usenix.org/conference/atc21/presentation/ren-jie" target="_blank">[ATC'21] ZeRO-Offload</a></li>
-            <li><a href="https://www.usenix.org/conference/fast21/presentation/kim" target="_blank">[FAST'21] Behemoth</a></li>
-            <li><a href="https://dl.acm.org/doi/pdf/10.1145/3458817.3476205" target="_blank">[SC'21] ZeRO-Infinity</a></li>
-            <li><a href="https://dl.acm.org/doi/pdf/10.1145/3445814.3446763" target="_blank">[ASPLOS'21] RecSSD</a></li>
-        </ul>
-    </div>
 
     <!-- To Do content -->
-    <div id="todo" class="content">
+    <div id="todo" class="content active">
         <h4>To Do List</h4>
 
-        <div class="clock" id="clock">00:00:00</div>
+        <div class="clock" id="clock">YYYY . MM . DD (Day) HH : MM . am/pm</div>
 
         <ul class="todo-list" id="todo-list">
             <!-- Checklist items will be added here -->
@@ -117,46 +79,123 @@
 
         <input type="text" id="todo-input" class="todo-input" placeholder="Enter a new task">
         <button onclick="addTodo()">Add Task</button>
+        <button onclick="clearAllTodos()">Clear All</button>
     </div>
 
     <script>
+        // Function to display content based on the section
         function showContent(section) {
             document.querySelectorAll('.content').forEach(content => content.classList.remove('active'));
             document.getElementById(section).classList.add('active');
         }
 
+        // Clock function
         function updateClock() {
             const now = new Date();
-            const hours = String(now.getHours()).padStart(2, '0');
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const date = String(now.getDate()).padStart(2, '0');
+            const day = now.toLocaleString('en-us', { weekday: 'long' });
+            let hours = now.getHours();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12;
             const minutes = String(now.getMinutes()).padStart(2, '0');
-            const seconds = String(now.getSeconds()).padStart(2, '0');
-            const currentTime = `${hours}:${minutes}:${seconds}`;
+            const currentTime = `${year} . ${month} . ${date} (${day}) ${hours} : ${minutes} ${ampm}`;
             document.getElementById('clock').textContent = currentTime;
         }
 
         setInterval(updateClock, 1000);
-        updateClock(); // 페이지가 로드될 때 바로 시간을 표시하기 위해 호출
+        updateClock();
 
+        // LocalStorage to persist todos
+        function saveTodos(todos) {
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
+
+        function loadTodos() {
+            const savedTodos = localStorage.getItem('todos');
+            return savedTodos ? JSON.parse(savedTodos) : [];
+        }
+
+        // Add a new task to the list
         function addTodo() {
             const todoInput = document.getElementById('todo-input');
             const taskText = todoInput.value.trim();
             if (taskText === '') return;
 
-            const todoList = document.getElementById('todo-list');
-            const li = document.createElement('li');
-            li.innerHTML = `<input type="checkbox" onclick="toggleComplete(this)"> ${taskText}`;
-            todoList.appendChild(li);
-            todoInput.value = ''; // 입력 후 필드를 비움
+            const todos = loadTodos();
+            todos.push({ text: taskText, completed: false });
+            saveTodos(todos);
+            renderTodos();
+            todoInput.value = '';
         }
 
-        function toggleComplete(checkbox) {
-            const li = checkbox.parentElement;
-            if (checkbox.checked) {
-                li.classList.add('completed');
-            } else {
-                li.classList.remove('completed');
-            }
+        // Render the todo list
+        function renderTodos() {
+            const todoList = document.getElementById('todo-list');
+            todoList.innerHTML = '';
+
+            const todos = loadTodos();
+            todos.forEach((todo, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `<input type="checkbox" ${todo.completed ? 'checked' : ''} onclick="toggleComplete(${index})"> 
+                                ${todo.text} 
+                                <button onclick="deleteTodo(${index})">Delete</button>`;
+                if (todo.completed) {
+                    li.classList.add('completed');
+                }
+                todoList.appendChild(li);
+            });
         }
+
+        // Toggle the completion status of a task
+        function toggleComplete(index) {
+            const todos = loadTodos();
+            todos[index].completed = !todos[index].completed;
+            saveTodos(todos);
+            renderTodos();
+        }
+
+        // Delete a single task
+        function deleteTodo(index) {
+            const todos = loadTodos();
+            todos.splice(index, 1);
+            saveTodos(todos);
+            renderTodos();
+        }
+
+        // Clear all tasks
+        function clearAllTodos() {
+            localStorage.removeItem('todos');
+            renderTodos();
+        }
+
+        // Load and render todos when the page is loaded
+        window.onload = renderTodos;
+
+        // Drag and drop functionality (optional improvement)
+        let dragged;
+        document.addEventListener("dragstart", function(event) {
+            dragged = event.target;
+        });
+
+        document.addEventListener("dragover", function(event) {
+            event.preventDefault();
+        });
+
+        document.addEventListener("drop", function(event) {
+            event.preventDefault();
+            if (event.target.nodeName === "LI") {
+                const todos = loadTodos();
+                const fromIndex = Array.from(event.target.parentNode.children).indexOf(dragged);
+                const toIndex = Array.from(event.target.parentNode.children).indexOf(event.target);
+                const movedTodo = todos.splice(fromIndex, 1)[0];
+                todos.splice(toIndex, 0, movedTodo);
+                saveTodos(todos);
+                renderTodos();
+            }
+        });
     </script>
 </body>
 </html>
