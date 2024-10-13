@@ -18,6 +18,7 @@
 
         h3 {
             margin-bottom: 10px;
+            margin-top: 20px; /* 위 여백 추가 */
         }
 
         .navigation {
@@ -52,7 +53,7 @@
             font-size: 24px;
             font-weight: bold;
             text-align: center;
-            line-height: 1.5; /* 줄 간격 1.5로 설정 */
+            line-height: 1.5;
             margin-bottom: 20px;
             white-space: pre-line;
         }
@@ -60,12 +61,12 @@
         .todo-list {
             list-style: none;
             padding: 0;
-            max-width: 500px; /* 투두 리스트의 가로 길이 제한 */
+            max-width: 500px;
             margin: 0;
         }
 
         .todo-list li {
-            margin: 10px 0;
+            margin: 15px 0; /* li 간격을 1.5로 조정 */
             cursor: move;
             background-color: #f1f1f1;
             padding: 10px;
@@ -96,26 +97,39 @@
         .left-column {
             width: 30%;
             padding: 10px;
+            padding-left: 15px; /* 좌측 여백 추가 */
         }
 
         .right-column {
             width: 70%;
             padding: 10px;
-            height: 100vh; /* 높이를 맞추기 위해 추가 */
+            height: 100vh;
             overflow-y: auto;
         }
-        
+
         /* 시계 가운데 정렬 */
         .clock {
             text-align: center;
         }
+
+        /* 링크 색상이 클릭 후에도 변하지 않도록 */
+        a:link, a:visited {
+            color: blue;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        a:active {
+            color: blue;
+        }
     </style>
 </head>
 <body>
-    <!-- 최상단 워크스테이션 제목 -->
     <h3>Joonhee's Workstation</h3>
 
-    <!-- 페이지 이동 버튼 -->
     <div class="navigation">
         <button onclick="showContent('todo')">To Do List</button>
         <button onclick="showContent('lab')">Lab Progress</button>
@@ -124,18 +138,13 @@
     </div>
 
     <div class="layout">
-        <!-- 좌측 시계 및 투두 리스트 -->
         <div class="left-column">
-            <!-- 시계 -->
             <div class="clock" id="clock">YYYY . MM . DD (Day)\nHH : MM : SS am/pm</div>
             <br><br>
 
-            <!-- 투두 리스트 -->
             <div class="todo-container">
                 <h4>To Do List</h4>
-                <ul class="todo-list" id="todo-list">
-                    <!-- Checklist items will be added here -->
-                </ul>
+                <ul class="todo-list" id="todo-list"></ul>
 
                 <div class="buttons" id="default-buttons">
                     <input type="text" id="todo-input" class="todo-input" placeholder="Enter a new task">
@@ -144,33 +153,28 @@
                     <button onclick="enterDeleteMode()">Delete Mode</button>
                 </div>
 
-                <!-- Delete mode buttons -->
                 <div id="delete-mode-buttons" class="hidden">
                     <button onclick="exitDeleteMode()">Exit Delete Mode</button>
                     <button onclick="clearAllTodos()">Clear All</button>
                 </div>
 
-                <!-- Sort mode buttons -->
                 <div id="sort-mode-buttons" class="hidden">
                     <button onclick="exitSortMode()">Exit Sort Mode</button>
                 </div>
             </div>
         </div>
 
-        <!-- 우측 내용 -->
         <div class="right-column">
-            <!-- 각 페이지 내용 -->
             <div id="lab" class="content">
                 <h4>Lab Progress</h4>
                 <h5>Linux Kernel</h5>
                 <ul>
-                    <li>Linux 커널 코드 저장소<br><a href="https://github.com/torvalds/linux/tree/master" target="_blank">https://github.com/torvalds/linux/tree/master</a></li>
-                    <li>Linux 커널 스택 다이어그램<br><a href="https://www.thomas-krenn.com/en/wiki/Linux_Storage_Stack_Diagram" target="_blank">https://www.thomas-krenn.com/en/wiki/Linux_Storage_Stack_Diagram</a></ㅠㄱ> </li>
-                    <li>Linux 장치 드라이버 관련 가이드<br><a href="https://www.oreilly.com/library/view/linux-device-drivers/9781785280009/26250ed8-a263-4910-8d43-5c6e1a6d753f.xhtml" target="_blank">https://www.oreilly.com/library/view/linux-device-drivers/9781785280009/26250ed8-a263-4910-8d43-5c6e1a6d753f.xhtml</a></li>
+                    <li><a href="https://github.com/torvalds/linux/tree/master" target="_blank">Linux 커널 코드 저장소</a></li>
+                    <li><a href="https://www.thomas-krenn.com/en/wiki/Linux_Storage_Stack_Diagram" target="_blank">Linux 커널 스택 다이어그램</a></li>
+                    <li><a href="https://www.oreilly.com/library/view/linux-device-drivers/9781785280009/26250ed8-a263-4910-8d43-5c6e1a6d753f.xhtml" target="_blank">Linux 장치 드라이버 관련 가이드</a></li>
                 </ul>
             </div>
 
-            <!-- Lab Paper Seminar content -->
             <div id="lab-seminar" class="content">
                 <h4>Lab Paper Seminar</h4>
                 <h5>[EuroSys'24] Exploring the Asynchrony of Slow Memory Filesystem with EasyIO</h5>
@@ -181,7 +185,6 @@
                 </ul>
             </div>
 
-            <!-- Master's Program content -->
             <div id="masters" class="content">
                 <h4>Master's Program</h4>
                 <h5>Topics in Artificial Intelligence</h5>
@@ -195,13 +198,11 @@
     </div>
 
     <script>
-        // Show selected section
         function showContent(section) {
             document.querySelectorAll('.content').forEach(content => content.classList.remove('active'));
             document.getElementById(section).classList.add('active');
         }
 
-        // Clock function
         function updateClock() {
             const now = new Date();
             const year = now.getFullYear();
@@ -220,143 +221,6 @@
 
         setInterval(updateClock, 1000);
         updateClock();
-
-        // ToDo list functionalities
-        let isSortMode = false;
-        let isDeleteMode = false;
-
-        // LocalStorage to persist todos
-        function saveTodos(todos) {
-            localStorage.setItem('todos', JSON.stringify(todos));
-        }
-
-        function loadTodos() {
-            const savedTodos = localStorage.getItem('todos');
-            return savedTodos ? JSON.parse(savedTodos) : [];
-        }
-
-        // Add a new task to the list
-        function addTodo() {
-            const todoInput = document.getElementById('todo-input');
-            const taskText = todoInput.value.trim();
-            if (taskText === '') return;
-
-            const todos = loadTodos();
-            todos.push({ text: taskText, completed: false });
-            saveTodos(todos);
-            renderTodos();
-            todoInput.value = '';
-        }
-
-        // Render the todo list
-        function renderTodos() {
-            const todoList = document.getElementById('todo-list');
-            todoList.innerHTML = '';
-
-            const todos = loadTodos();
-            todos.forEach((todo, index) => {
-                const li = document.createElement('li');
-                li.innerHTML = `<input type="checkbox" ${todo.completed ? 'checked' : ''} onclick="toggleComplete(${index})"> 
-                                ${todo.text}`;
-                li.draggable = isSortMode;
-                li.addEventListener('dragstart', function(event) {
-                    event.dataTransfer.setData('text/plain', index);
-                });
-                li.addEventListener('dragover', function(event) {
-                    event.preventDefault();
-                });
-                li.addEventListener('drop', function(event) {
-                    const fromIndex = event.dataTransfer.getData('text');
-                    const toIndex = index;
-                    moveTodoItem(fromIndex, toIndex);
-                });
-                if (todo.completed) {
-                    li.classList.add('completed');
-                }
-                todoList.appendChild(li);
-            });
-        }
-
-        // Move todo item in the list
-        function moveTodoItem(fromIndex, toIndex) {
-            const todos = loadTodos();
-            const movedItem = todos.splice(fromIndex, 1)[0];
-            todos.splice(toIndex, 0, movedItem);
-            saveTodos(todos);
-            renderTodos();
-        }
-
-        // Toggle the completion status of a task
-        function toggleComplete(index) {
-            const todos = loadTodos();
-            todos[index].completed = !todos[index].completed;
-            saveTodos(todos);
-            renderTodos();
-        }
-
-        // Clear all tasks
-        function clearAllTodos() {
-            localStorage.removeItem('todos');
-            renderTodos();
-        }
-
-        // Enter sort mode
-        function enterSortMode() {
-            if (isDeleteMode) return;  // Delete Mode와 동시에 수행되지 않도록
-            isSortMode = true;
-            document.getElementById('sort-mode-buttons').classList.remove('hidden');
-            document.getElementById('default-buttons').classList.add('hidden');
-            renderTodos();
-        }
-
-        // Exit sort mode
-        function exitSortMode() {
-            isSortMode = false;
-            document.getElementById('sort-mode-buttons').classList.add('hidden');
-            document.getElementById('default-buttons').classList.remove('hidden');
-            renderTodos();
-        }
-
-        // Enter delete mode
-        function enterDeleteMode() {
-            if (isSortMode) return;  // Sort Mode와 동시에 수행되지 않도록
-            isDeleteMode = true;
-            document.getElementById('delete-mode-buttons').classList.remove('hidden');
-            document.getElementById('default-buttons').classList.add('hidden');
-            renderDeleteMode();
-        }
-
-        // Exit delete mode
-        function exitDeleteMode() {
-            isDeleteMode = false;
-            document.getElementById('delete-mode-buttons').classList.add('hidden');
-            document.getElementById('default-buttons').classList.remove('hidden');
-            renderTodos();
-        }
-
-        // Render delete mode (show delete buttons)
-        function renderDeleteMode() {
-            const todoList = document.getElementById('todo-list');
-            todoList.innerHTML = '';
-
-            const todos = loadTodos();
-            todos.forEach((todo, index) => {
-                const li = document.createElement('li');
-                li.innerHTML = `${todo.text} <button onclick="deleteTodo(${index})">Delete</button>`;
-                todoList.appendChild(li);
-            });
-        }
-
-        // Delete a single task
-        function deleteTodo(index) {
-            const todos = loadTodos();
-            todos.splice(index, 1);
-            saveTodos(todos);
-            renderDeleteMode();
-        }
-
-        // Load and render todos when the page is loaded
-        window.onload = renderTodos;
     </script>
 </body>
 </html>
