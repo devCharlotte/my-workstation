@@ -51,9 +51,10 @@
         .clock {
             font-size: 24px;
             font-weight: bold;
-            text-align: left;
+            text-align: center;
+            line-height: 1.5; /* 줄 간격 1.5로 설정 */
             margin-bottom: 20px;
-            white-space: pre-line; /* 줄바꿈 허용 */
+            white-space: pre-line;
         }
 
         .todo-list {
@@ -100,6 +101,13 @@
         .right-column {
             width: 70%;
             padding: 10px;
+            height: 100vh; /* 높이를 맞추기 위해 추가 */
+            overflow-y: auto;
+        }
+        
+        /* 시계 가운데 정렬 */
+        .clock {
+            text-align: center;
         }
     </style>
 </head>
@@ -157,6 +165,7 @@
                 <h5>Linux Kernel</h5>
                 <ul>
                     <li>Linux 커널 코드 저장소<br><a href="https://github.com/torvalds/linux/tree/master" target="_blank">https://github.com/torvalds/linux/tree/master</a></li>
+                    <li>Linux 커널 스택 다이어그램<br><a href="https://www.thomas-krenn.com/en/wiki/Linux_Storage_Stack_Diagram" target="_blank">https://www.thomas-krenn.com/en/wiki/Linux_Storage_Stack_Diagram</a></ㅠㄱ> </li>
                     <li>Linux 장치 드라이버 관련 가이드<br><a href="https://www.oreilly.com/library/view/linux-device-drivers/9781785280009/26250ed8-a263-4910-8d43-5c6e1a6d753f.xhtml" target="_blank">https://www.oreilly.com/library/view/linux-device-drivers/9781785280009/26250ed8-a263-4910-8d43-5c6e1a6d753f.xhtml</a></li>
                 </ul>
             </div>
