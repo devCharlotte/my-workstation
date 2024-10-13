@@ -62,11 +62,11 @@
             list-style: none;
             padding: 0;
             max-width: 500px;
-            margin: 0;
+            margin: 0 auto;
         }
 
         .todo-list li {
-            margin: 15px 0; /* li 간격을 1.5로 조정 */
+            margin: 15px 0;
             cursor: move;
             background-color: #f1f1f1;
             padding: 10px;
@@ -125,6 +125,13 @@
         a:active {
             color: blue;
         }
+
+        /* Add line breaks between buttons */
+        #todo-buttons-container button {
+            display: block;
+            margin-bottom: 10px;
+        }
+
     </style>
 </head>
 <body>
@@ -146,7 +153,7 @@
                 <h4>To Do List</h4>
                 <ul class="todo-list" id="todo-list"></ul>
 
-                <div class="buttons" id="default-buttons">
+                <div id="todo-buttons-container">
                     <input type="text" id="todo-input" class="todo-input" placeholder="Enter a new task">
                     <button onclick="addTodo()">Add Task</button>
                     <button onclick="enterSortMode()">Custom Sort Mode</button>
@@ -198,11 +205,13 @@
     </div>
 
     <script>
+        // Show selected section
         function showContent(section) {
             document.querySelectorAll('.content').forEach(content => content.classList.remove('active'));
             document.getElementById(section).classList.add('active');
         }
 
+        // Clock function
         function updateClock() {
             const now = new Date();
             const year = now.getFullYear();
@@ -221,6 +230,143 @@
 
         setInterval(updateClock, 1000);
         updateClock();
+
+        // ToDo list functionalities
+        let isSortMode = false;
+        let isDeleteMode = false;
+
+        // LocalStorage to persist todos
+        function saveTodos(todos) {
+            localStorage.setItem('todos', JSON.stringify(todos));
+        }
+
+        function loadTodos() {
+            const savedTodos = localStorage.getItem('todos');
+            return savedTodos ? JSON.parse(savedTodos) : [];
+        }
+
+        // Add a new task to the list
+        function addTodo() {
+            const todoInput = document.getElementById('todo-input');
+            const taskText = todoInput.value.trim();
+            if (taskText === '') return;
+
+            const todos = loadTodos();
+            todos.push({ text: taskText, completed: false });
+            saveTodos(todos);
+            renderTodos();
+            todoInput.value = '';
+        }
+
+        // Render the todo list
+        function renderTodos() {
+            const todoList = document.getElementById('todo-list');
+            todoList.innerHTML = '';
+
+            const todos = loadTodos();
+            todos.forEach((todo, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `<input type="checkbox" ${todo.completed ? 'checked' : ''} onclick="toggleComplete(${index})"> 
+                                ${todo.text}`;
+                li.draggable = isSortMode;
+                li.addEventListener('dragstart', function(event) {
+                    event.dataTransfer.setData('text/plain', index);
+                });
+                li.addEventListener('dragover', function(event) {
+                    event.preventDefault();
+                });
+                li.addEventListener('drop', function(event) {
+                    const fromIndex = event.dataTransfer.getData('text');
+                    const toIndex = index;
+                    moveTodoItem(fromIndex, toIndex);
+                });
+                if (todo.completed) {
+                    li.classList.add('completed');
+                }
+                todoList.appendChild(li);
+            });
+        }
+
+        // Move todo item in the list
+        function moveTodoItem(fromIndex, toIndex) {
+            const todos = loadTodos();
+            const movedItem = todos.splice(fromIndex, 1)[0];
+            todos.splice(toIndex, 0, movedItem);
+            saveTodos(todos);
+            renderTodos();
+        }
+
+        // Toggle the completion status of a task
+        function toggleComplete(index) {
+            const todos = loadTodos();
+            todos[index].completed = !todos[index].completed;
+            saveTodos(todos);
+            renderTodos();
+        }
+
+        // Clear all tasks
+        function clearAllTodos() {
+            localStorage.removeItem('todos');
+            renderTodos();
+        }
+
+        // Enter sort mode
+        function enterSortMode() {
+            if (isDeleteMode) return;  // Delete Mode와 동시에 수행되지 않도록
+            isSortMode = true;
+            document.getElementById('sort-mode-buttons').classList.remove('hidden');
+            document.getElementById('default-buttons').classList.add('hidden');
+            renderTodos();
+        }
+
+        // Exit sort mode
+        function exitSortMode() {
+            isSortMode = false;
+            document.getElementById('sort-mode-buttons').classList.add('hidden');
+            document.getElementById('default-buttons').classList.remove('hidden');
+            renderTodos();
+        }
+
+        // Enter delete mode
+        function enterDeleteMode() {
+            if (isSortMode) return;  // Sort Mode와 동시에 수행되지 않도록
+            isDeleteMode = true;
+            document.getElementById('delete-mode-buttons').classList.remove('hidden');
+            document.getElementById('default-buttons').classList.add('hidden');
+            renderDeleteMode();
+        }
+
+        // Exit delete mode
+        function exitDeleteMode() {
+            isDeleteMode = false;
+            document.getElementById('delete-mode-buttons').classList.add('hidden');
+            document.getElementById('default-buttons').classList.remove('hidden');
+            renderTodos();
+        }
+
+        // Render delete mode (show delete buttons)
+        function renderDeleteMode() {
+            const todoList = document.getElementById('todo-list');
+            todoList.innerHTML = '';
+
+            const todos = loadTodos();
+            todos.forEach((todo, index) => {
+                const li = document.createElement('li');
+                li.innerHTML = `${todo.text} <button onclick="deleteTodo(${index})">Delete</button>`;
+                todoList.appendChild(li);
+            });
+        }
+
+        // Delete a single task
+        function deleteTodo(index) {
+            const todos = loadTodos();
+            todos.splice(index, 1);
+            saveTodos(todos);
+            renderDeleteMode();
+        }
+
+        // Load and render todos when the page is loaded
+        window.onload = renderTodos;
     </script>
 </body>
 </html>
