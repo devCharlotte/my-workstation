@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Joonhee's Workstation</title>
     <style>
+        /* 기본 폰트 설정 */
         @font-face {
             font-family: 'HakgyoansimGeurimilgiTTF-R';
             src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimGeurimilgiTTF-R.woff2') format('woff2');
@@ -18,13 +19,13 @@
 
         h3 {
             margin-bottom: 10px;
-            margin-left: 20px; /* 좌측 여백 추가 */
-            margin-top: 20px; /* 상단 여백 추가 */
+            margin-left: 20px;
+            margin-top: 20px;
         }
 
         .navigation {
             margin-bottom: 20px;
-            margin-left: 20px; /* 좌측 여백 추가 */
+            margin-left: 20px;
         }
 
         .content {
@@ -37,7 +38,7 @@
 
         h4 {
             font-size: 1.2em;
-            margin-left: 20px; /* To Do List 제목에 좌측 여백 추가 */
+            margin-left: 20px;
         }
 
         h5 {
@@ -56,7 +57,7 @@
             font-size: 24px;
             font-weight: bold;
             text-align: center;
-            line-height: 1.5; /* 줄 간격 1.5로 설정 */
+            line-height: 1.5;
             margin-bottom: 20px;
             white-space: pre-line;
         }
@@ -64,8 +65,8 @@
         .todo-list {
             list-style: none;
             padding: 0;
-            max-width: 500px; /* 투두 리스트의 가로 길이 제한 */
-            margin-left: 20px; /* To Do List 아이템에 좌측 여백 추가 */
+            max-width: 500px;
+            margin-left: 20px;
         }
 
         .todo-list li {
@@ -91,7 +92,7 @@
         .buttons {
             text-align: left;
             margin-bottom: 10px;
-            margin-left: 20px; /* 버튼에 좌측 여백 추가 */
+            margin-left: 20px;
         }
 
         .layout {
@@ -106,16 +107,14 @@
         .right-column {
             width: 70%;
             padding: 10px;
-            height: 100vh; /* 높이를 맞추기 위해 추가 */
+            height: 100vh;
             overflow-y: auto;
         }
 
-        /* 시계 가운데 정렬 */
         .clock {
             text-align: center;
         }
 
-        /* 버튼을 옆에 두기 위한 설정 */
         .input-group {
             display: flex;
             align-items: center;
@@ -130,7 +129,6 @@
             margin-bottom: 5px;
         }
 
-        /* 링크 색상이 클릭 후에도 변하지 않도록 */
         a:link, a:visited {
             color: blue;
             text-decoration: none;
@@ -195,7 +193,22 @@
 
         <!-- 우측 내용 -->
         <div class="right-column">
-            <!-- 각 페이지 내용 -->
+            <!-- Lab Progress -->
+            <div id="lab" class="content">
+                <h4>Lab - Intel IOAT</h4>
+                <ul>
+                    <li><a href="https://www.intel.la/content/dam/doc/white-paper/quickdata-technology-software-guide-for-linux-paper.pdf" target="_blank">Intel QuickData Technology Software Guide for Linux</a></li>
+                    <li><a href="https://liujunming.top/2022/03/29/Introduction-to-Intel-I-OAT/" target="_blank">Introduction to Intel I/OAT</a></li>
+                    <li><a href="https://www.intel.com/content/dam/doc/white-paper/i-o-acceleration-technology-paper.pdf" target="_blank">Intel I/O Acceleration Technology Paper</a></li>
+                    <li><a href="https://yybox.tistory.com/5" target="_blank">Intel I/OAT 관련 기술 소개</a></li>
+                    <li><a href="https://mvapich.cse.ohio-state.edu/static/media/publications/abstract/vaidyana-ispass07.pdf" target="_blank">MVAPICH 관련 논문</a></li>
+                    <li><a href="https://spdk.io/doc/ioat.html" target="_blank">SPDK IOAT Documentation</a></li>
+                    <li><a href="https://spdk.io/doc/ioat_8h.html" target="_blank">SPDK IOAT Header Documentation</a></li>
+                    <li><a href="https://insujang.github.io/2021-04-26/using-intel-ioat-dma/" target="_blank">Using Intel IOAT DMA</a></li>
+                    <li><a href="https://me74.tistory.com/142" target="_blank">Intel IOAT 관련 추가 자료</a></li>
+                </ul>
+            </div>
+
             <div id="lab-seminar" class="content">
                 <h4>Lab Paper Seminar</h4>
                 <h5>[EuroSys'24] Exploring the Asynchrony of Slow Memory Filesystem with EasyIO</h5>
@@ -268,7 +281,7 @@
             let hours = now.getHours();
             const ampm = hours >= 12 ? 'PM' : 'AM';
             hours = hours % 12;
-            hours = hours ? hours : 12;
+            hours = hours ? 12 : hours;
             const minutes = String(now.getMinutes()).padStart(2, '0');
             const seconds = String(now.getSeconds()).padStart(2, '0');
             const currentTime = `${year} . ${month} . ${date} (${day})\n${hours} : ${minutes} : ${seconds} ${ampm}`;
@@ -359,7 +372,7 @@
 
         // Enter sort mode
         function enterSortMode() {
-            if (isDeleteMode) return;  // Delete Mode와 동시에 수행되지 않도록
+            if (isDeleteMode) return;
             isSortMode = true;
             document.getElementById('sort-mode-buttons').classList.remove('hidden');
             document.getElementById('default-buttons').classList.add('hidden');
@@ -376,7 +389,7 @@
 
         // Enter delete mode
         function enterDeleteMode() {
-            if (isSortMode) return;  // Sort Mode와 동시에 수행되지 않도록
+            if (isSortMode) return;
             isDeleteMode = true;
             document.getElementById('delete-mode-buttons').classList.remove('hidden');
             document.getElementById('default-buttons').classList.add('hidden');
