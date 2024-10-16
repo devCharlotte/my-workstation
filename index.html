@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>  
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
@@ -102,85 +102,35 @@
 
     <!-- 페이지 이동 버튼 -->
     <div class="navigation">
-        <button onclick="showContent('todo')">To Do List</button>
-        <button onclick="showContent('lab')">Lab Progress</button>
-        <button onclick="showContent('lab-seminar')">Lab Paper Seminar</button>
-        <button onclick="showContent('masters')">Master's Program</button>
-        <button onclick="showContent('dsa')">Intel DSA</button>
+        <button onclick="loadPage('todo.html')">To Do List</button>
+        <button onclick="loadPage('lab.html')">Lab Progress</button>
+        <button onclick="loadPage('lab-seminar.html')">Lab Paper Seminar</button>
+        <button onclick="loadPage('masters.html')">Master's Program</button>
+        <button onclick="loadPage('dsa.html')">Intel DSA</button>
     </div>
 
     <div class="layout">
-        <!-- 좌측 시계 및 투두 리스트 -->
+        <!-- 좌측 시계 -->
         <div class="left-column">
-            <!-- 시계 -->
             <div class="clock" id="clock">YYYY . MM . DD (Day)\nHH : MM : SS am/pm</div>
-            <br><br>
-
-            <!-- To Do List -->
-            <div id="todo-container"></div> <!-- 투두 리스트가 삽입될 위치 -->
         </div>
 
         <!-- 우측 내용 -->
         <div class="right-column">
-            <!-- Lab Progress -->
-            <div id="lab" class="content">
-                <h4>Lab - Intel IOAT</h4>
-                <ul>
-                    <li><a href="https://www.intel.la/content/dam/doc/white-paper/quickdata-technology-software-guide-for-linux-paper.pdf" target="_blank">Intel QuickData Technology Software Guide for Linux</a></li>
-                    <li><a href="https://liujunming.top/2022/03/29/Introduction-to-Intel-I-OAT/" target="_blank">Introduction to Intel I/OAT</a></li>
-                    <li><a href="https://www.intel.com/content/dam/doc/white-paper/i-o-acceleration-technology-paper.pdf" target="_blank">Intel I/O Acceleration Technology Paper</a></li>
-                    <li><a href="https://yybox.tistory.com/5" target="_blank">Intel I/OAT 관련 기술 소개</a></li>
-                    <li><a href="https://mvapich.cse.ohio-state.edu/static/media/publications/abstract/vaidyana-ispass07.pdf" target="_blank">MVAPICH 관련 논문</a></li>
-                    <li><a href="https://spdk.io/doc/ioat.html" target="_blank">SPDK IOAT Documentation</a></li>
-                    <li><a href="https://spdk.io/doc/ioat_8h.html" target="_blank">SPDK IOAT Header Documentation</a></li>
-                    <li><a href="https://insujang.github.io/2021-04-26/using-intel-ioat-dma/" target="_blank">Using Intel IOAT DMA</a></li>
-                    <li><a href="https://me74.tistory.com/142" target="_blank">Intel IOAT 관련 추가 자료</a></li>
-                </ul>
-            </div>
-
-            <!-- Intel DSA -->
-            <div id="dsa" class="content">
-                <h4>Intel Data Streaming Accelerator (DSA)</h4>
-                <ul>
-                    <li><a href="https://www.intel.com/content/www/us/en/content-details/671116/intel-data-streaming-accelerator-architecture-specification.html" target="_blank">Intel DSA Architecture Specification</a></li>
-                </ul>
-            </div>
-
-            <!-- Lab Paper Seminar -->
-            <div id="lab-seminar" class="content">
-                <h4>Lab Paper Seminar</h4>
-                <h5>[EuroSys'24] Exploring the Asynchrony of Slow Memory Filesystem with EasyIO</h5>
-                <ul>
-                    <li><a href="#dma-ioat">DMA 및 IOAT 관련</a></li>
-                    <li><a href="#soc-architecture">특정 SoC 및 아키텍처 설명</a></li>
-                    <li><a href="#misc">기타 자료</a></li>
-                    <li><a href="#linux-kernel">Linux Kernel 관련 자료</a></li>
-                </ul>
-            </div>
-
-            <div id="masters" class="content">
-                <h4>Master's Program</h4>
-                <h5>Topics in Artificial Intelligence</h5>
-                <h5>Personal Seminar</h5>
-                <ul>
-                    <li><a href="https://www.usenix.org/conference/atc21/presentation/ren-jie" target="_blank">[ATC'21] ZeRO-Offload</a></li>
-                    <li><a href="https://www.usenix.org/conference/fast21/presentation/kim" target="_blank">[FAST'21] Behemoth</a></li>
-                </ul>
+            <div id="content-container">
+                <!-- 외부 파일이 이곳에 로드됩니다 -->
             </div>
         </div>
     </div>
 
     <script>
-        // Show selected section
-        function showContent(section) {
-            document.querySelectorAll('.content').forEach(content => content.classList.remove('active'));
-            document.getElementById(section).classList.add('active');
+        // 외부 파일 로드 함수
+        function loadPage(page) {
+            const container = document.getElementById("content-container");
+            container.innerHTML = '<object type="text/html" data="' + page + '" ></object>';
         }
 
-        // Load To Do List from external file
-        document.getElementById("todo-container").innerHTML = '<object type="text/html" data="todo.html" ></object>';
-
-        // Clock function
+        // 시계 업데이트 함수
         function updateClock() {
             const now = new Date();
             const year = now.getFullYear();
@@ -190,7 +140,7 @@
             let hours = now.getHours();
             const ampm = hours >= 12 ? 'PM' : 'AM';
             hours = hours % 12;
-            hours = hours ? 12 : hours;
+            hours = hours ? hours : 12;
             const minutes = String(now.getMinutes()).padStart(2, '0');
             const seconds = String(now.getSeconds()).padStart(2, '0');
             const currentTime = `${year} . ${month} . ${date} (${day})\n${hours} : ${minutes} : ${seconds} ${ampm}`;
